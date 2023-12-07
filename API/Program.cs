@@ -89,25 +89,16 @@ var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
+//}
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
 //app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
-//app.UseCors(x =>
-//{
-//    var allowedOrigins = app.Configuration.GetValue<string>("AllowedHosts");
-//    if (allowedOrigins.Equals("*", StringComparison.InvariantCulture))
-//        x.AllowAnyOrigin();
-//    else
-//        x.WithOrigins(allowedOrigins.Split(";", StringSplitOptions.RemoveEmptyEntries)).AllowCredentials();
 
-//    x.AllowAnyMethod().AllowAnyHeader();
-//});
 
 app.UseAuthentication();
 app.UseAuthorization();
