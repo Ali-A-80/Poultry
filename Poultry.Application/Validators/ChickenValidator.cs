@@ -8,7 +8,7 @@ namespace Poultry.Application.Validators
         public ChickenValidator()
         {
 
-            RuleFor(x => x.Gender).NotEmpty().WithMessage("لطفا جنسیت را وارد کنید");
+            RuleFor(x => x.Gender).NotNull().WithMessage("لطفا جنسیت را وارد کنید");
 
             RuleFor(x => x.Age).NotEmpty().WithMessage("لطفا مقدار سن را وارد کنید")
                 .Must(x => x >= 0 && x <= 255).WithMessage("محدوده سنی را به درستی وارد کنید");

@@ -42,7 +42,6 @@ namespace Endpoint.API.Controllers
         [HttpGet("issignedin")]
         public async Task<IActionResult> IsSignedIn()
         {
-            string temp = Request.Headers["Authorization"];
             var user = await Mediator.Send(new ValidateTokenService.Command{ Token = Request.Headers["Authorization"] });
             if (user.Data is null)
                 return BadRequest();

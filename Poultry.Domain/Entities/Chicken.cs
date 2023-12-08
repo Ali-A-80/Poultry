@@ -17,10 +17,13 @@
     }
 
     #region ChickenTypeEnum
+    
     public enum ChickenType : byte
     {
-        hen = 0,
-        rooster
+       
+        eggy = 0,
+        meaty,
+        others
     }
 
     #endregion
