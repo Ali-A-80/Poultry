@@ -43,11 +43,6 @@ namespace Poultry.Application.Services.Zones
                     ZoneType = request.Zone.ZoneType
                 };
 
-                var weather = new Weather
-                {
-                    Zone = zone
-                };
-
                 var rand = new Random();
 
                 var lightingStatus = new LightingStatus
@@ -58,7 +53,6 @@ namespace Poultry.Application.Services.Zones
                 };
 
                 await _context.Zones.AddAsync(zone , cancellationToken);
-                await _context.Weathers.AddAsync(weather , cancellationToken);
                 await _context.LightingStatuses.AddAsync(lightingStatus , cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
 

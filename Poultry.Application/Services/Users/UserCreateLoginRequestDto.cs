@@ -1,6 +1,6 @@
 ﻿namespace Poultry.Application.Services.Users
 {
-    public class UserRequestDto
+    public class UserCreateLoginRequestDto
     {
         public string Username { get; set; }
         //public string Email { get; set; }

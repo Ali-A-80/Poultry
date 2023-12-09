@@ -19,7 +19,6 @@ namespace Poultry.Persistance.Contexts
         public DbSet<LightingStatus> LightingStatuses { get; set; }
         public DbSet<TemperatureSensor> TemperatureSensors { get; set; }
         public DbSet<VentilationSensor> VentilationSensors { get; set; }
-        public DbSet<Weather> Weathers { get; set; }
         public DbSet<Zone> Zones { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
 
@@ -34,7 +33,6 @@ namespace Poultry.Persistance.Contexts
             builder.ApplyConfiguration(new LightingStatusConfiguration());
             builder.ApplyConfiguration(new TemperatureSensorConfiguration());
             builder.ApplyConfiguration(new VentilationSensorConfiguration());
-            builder.ApplyConfiguration(new WeatherConfiguration());
             builder.ApplyConfiguration(new ZoneConfiguration());
             #endregion
 

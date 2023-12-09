@@ -3,7 +3,7 @@ using Poultry.Application.Services.Users;
 
 namespace Poultry.Application.EntityValidators
 {
-    public class UserValidator : AbstractValidator<UserRequestDto>
+    public class UserValidator : AbstractValidator<UserCreateLoginRequestDto>
     {
         public UserValidator()
         {

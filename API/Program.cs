@@ -35,7 +35,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
     opt.SignIn.RequireConfirmedEmail = false;
     opt.SignIn.RequireConfirmedPhoneNumber = false;
 
-}).AddEntityFrameworkStores<DatabaseContext>();
+}).AddEntityFrameworkStores<DatabaseContext>()
+.AddDefaultTokenProviders();
 
 #endregion
 

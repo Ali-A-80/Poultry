@@ -4,11 +4,14 @@ namespace Poultry.Application.Services.Weathers
 {
     public class WeatherResponseDto
     {
-        public WeatherResponseDto(Weather weather)
+        public WeatherResponseDto(WeatherDto weather)
         {
-            ZoneId = weather.ZoneId;
+            AverageTemperature = weather.AverageTemperature;
+            AverageHumidity = weather.AverageHumidity;
+            AverageVentilation = weather.AverageVentilation;
         }
-
-        public long ZoneId { get; set; }
+        public double AverageTemperature { get; set; }
+        public double AverageHumidity { get; set; }
+        public double AverageVentilation { get; set; }
     }
 }

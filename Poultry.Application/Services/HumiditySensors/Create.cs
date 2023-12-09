@@ -39,7 +39,7 @@ namespace Poultry.Application.Services.HumiditySensors
                 }
                 #endregion
 
-                var zone = await _context.Zones.Include(x => x.Weather).AsNoTracking()
+                var zone = await _context.Zones.AsNoTracking()
                     .FirstOrDefaultAsync(x => x.Id == request.HumiditySensor.ZoneId , cancellationToken);
 
                 if (zone is null)               

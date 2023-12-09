@@ -9,7 +9,7 @@ namespace Poultry.Application.Services.Users
     {
         public class Command : IRequest<ResultDto<AppUser>>
         {
-            public UserRequestDto UserRequest { get; set; }
+            public UserCreateLoginRequestDto UserRequest { get; set; }
         }
         public class Handler : IRequestHandler<Command, ResultDto<AppUser>>
         {

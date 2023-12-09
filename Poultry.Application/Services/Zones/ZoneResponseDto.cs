@@ -10,11 +10,18 @@ namespace Poultry.Application.Services.Zones
         {
             ZoneType = zone.ZoneType;
             LightingStatus = new LightingStatusResponseDto(zone.LightingStatus);
-            Weather = new WeatherResponseDto(zone.Weather);
+            Weather = new WeatherResponseDto(new WeatherDto
+            {
+                AverageHumidity = zone.GetAverageHumiditySensorAmount(),
+                AverageTemperature = zone.GetAverageTemperatureSensorAmount(),
+                AverageVentilation = zone.GetAverageVentilationSensorAmount()
+            });
         }
 
         public ZoneType ZoneType { get; set; }
         public LightingStatusResponseDto LightingStatus { get; set; }
         public WeatherResponseDto Weather { get; set; }
+
+        
     }
 }

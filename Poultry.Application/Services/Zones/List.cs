@@ -22,9 +22,12 @@ namespace Poultry.Application.Services.Zones
             }
             public async Task<ResultDto<List<ZoneResponseDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
+                
                 var query = await _context.Zones
                     .Include(x => x.LightingStatus)
-                    .Include(x => x.Weather)
+                    .Include(x => x.TemperatureSensors)
+                    .Include(x => x.HumiditySensors)
+                    .Include(x => x.VentilationSensors)
                     .AsNoTracking()
                     .Select(x => new ZoneResponseDto(x))
                     .ToListAsync(cancellationToken);

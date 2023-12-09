@@ -21,7 +21,7 @@ namespace Poultry.Application.Services.Users
 
             public Handler(IConfiguration config)
             {
-                _config = config;                
+                _config = config;
             }
 
             public async Task<ResultDto<ClaimsPrincipal>> Handle(Command request, CancellationToken cancellationToken)
@@ -38,12 +38,15 @@ namespace Poultry.Application.Services.Users
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tok = request.Token;
                 var temp = "Bearer ";
-                if (request.Token.StartsWith(temp))
-                    tok = tok.Substring(temp.Length);
+                if (tok is not null)
+                {
+                    if (request.Token.StartsWith(temp))
+                        tok = tok.Substring(temp.Length);
+                }
 
                 try
                 {
-                var principal = tokenHandler.ValidateToken(tok, tokenValidationParameters, out SecurityToken securityToken);
+                    var principal = tokenHandler.ValidateToken(tok, tokenValidationParameters, out SecurityToken securityToken);
                     if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals("HS512"))
                         return ResultDto<ClaimsPrincipal>.Failure(new List<string> { "Invalid token" });
                     return ResultDto<ClaimsPrincipal>.Success(principal);
@@ -52,7 +55,7 @@ namespace Poultry.Application.Services.Users
                 {
                     return ResultDto<ClaimsPrincipal>.Failure(new List<string> { "Invalid token" });
                 }
-                
+
             }
         }
     }

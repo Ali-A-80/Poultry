@@ -40,7 +40,7 @@ namespace Poultry.Application.Services.VentilationSensors
                 }
                 #endregion
 
-                var zone = await _context.Zones.Include(x => x.Weather).AsNoTracking()
+                var zone = await _context.Zones.AsNoTracking()
                     .FirstOrDefaultAsync(x => x.Id == request.VentilationSensor.ZoneId, cancellationToken);
 
                 if (zone is null)
