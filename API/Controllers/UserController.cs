@@ -20,7 +20,7 @@ namespace Endpoint.API.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateUser(UserCreateLoginRequestDto request)
         {
             var user = await Mediator.Send(new Create.Command { UserRequest = request });
@@ -76,7 +76,7 @@ namespace Endpoint.API.Controllers
 
             var editedUser = await Mediator.Send(new Edit.Command { Principal = user.Data, UserEdit = request });
             var result = await Mediator.Send(new TokenService.Command { AppUser = editedUser.Data });
-            return HandleResult(ResultDto<UserEditResponseDto>.Success(new UserEditResponseDto(result.Data, editedUser.Data)));
+            return HandleResult(ResultDto<UserEditResponseDto>.Success(new UserEditResponseDto(result.Data)));
         }
 
         #region RefreshToken
