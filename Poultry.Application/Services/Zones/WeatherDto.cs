@@ -1,4 +1,4 @@
-﻿namespace Poultry.Application.Services.Weathers
+﻿namespace Poultry.Application.Services.Zones
 {
     public class WeatherDto
     {

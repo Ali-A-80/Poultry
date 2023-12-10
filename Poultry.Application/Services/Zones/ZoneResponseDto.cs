@@ -1,5 +1,4 @@
 ﻿using Poultry.Application.Services.LightingStatuses;
-using Poultry.Application.Services.Weathers;
 using Poultry.Domain.Entities;
 
 namespace Poultry.Application.Services.Zones

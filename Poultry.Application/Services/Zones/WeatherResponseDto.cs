@@ -1,6 +1,6 @@
 ﻿using Poultry.Domain.Entities;
 
-namespace Poultry.Application.Services.Weathers
+namespace Poultry.Application.Services.Zones
 {
     public class WeatherResponseDto
     {
