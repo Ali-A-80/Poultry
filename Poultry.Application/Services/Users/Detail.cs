@@ -31,7 +31,7 @@ namespace Poultry.Application.Services.Users
                 return ResultDto<UserInfoResponseDro>.Success(new UserInfoResponseDro
                 {
                     Email = result.Email,
-                    MobileNumber = result.Email,
+                    PhoneNumber = result.PhoneNumber,
                     Username = result.UserName
                 });
             }

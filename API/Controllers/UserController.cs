@@ -13,12 +13,6 @@ namespace Endpoint.API.Controllers
     [ApiController]
     public class UserController : BaseController
     {
-        private readonly SignInManager<AppUser> _signInManager;
-
-        public UserController(SignInManager<AppUser> signInManager)
-        {
-            _signInManager = signInManager;
-        }
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser(UserCreateLoginRequestDto request)
@@ -31,7 +25,7 @@ namespace Endpoint.API.Controllers
         public async Task<IActionResult> Login(UserCreateLoginRequestDto request)
         {
             var user = await Mediator.Send(new Login.Command { UserRequest = request });
-            if (user is null)
+            if (user.Data is null) //changed
                 return NotFound("کاربر یافت نشد");
             return HandleResult(await Mediator.Send(new TokenService.Command { AppUser = user.Data }));
         }
