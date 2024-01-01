@@ -9,13 +9,13 @@ namespace Endpoint.API.Controllers
     public class HumiditySensorController : BaseController
     {
         [HttpGet]
-        public async Task<IActionResult> GetChickens()
+        public async Task<IActionResult> GetHumiditySensors()
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateChicken(HumiditySensorRequestDto humiditySensor)
+        public async Task<IActionResult> CreateHumiditySensor(HumiditySensorRequestDto humiditySensor)
         {
             return HandleResult(await Mediator.Send(new Create.Command
             {
@@ -29,7 +29,7 @@ namespace Endpoint.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditChicken(HumiditySensorRequestDto humiditySensor)
+        public async Task<IActionResult> EditHumiditySensor(HumiditySensorRequestDto humiditySensor)
         {
             return HandleResult(await Mediator.Send(new Edit.Command
             {
@@ -43,7 +43,7 @@ namespace Endpoint.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteChicken(long id)
+        public async Task<IActionResult> DeleteHumiditySensor(long id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }

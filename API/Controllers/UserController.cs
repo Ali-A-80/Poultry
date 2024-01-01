@@ -25,7 +25,7 @@ namespace Endpoint.API.Controllers
         public async Task<IActionResult> Login(UserCreateLoginRequestDto request)
         {
             var user = await Mediator.Send(new Login.Command { UserRequest = request });
-            if (user.Data is null) //changed
+            if (user.Data is null)
                 return NotFound("کاربر یافت نشد");
             return HandleResult(await Mediator.Send(new TokenService.Command { AppUser = user.Data }));
         }
@@ -40,7 +40,6 @@ namespace Endpoint.API.Controllers
         [HttpGet("issignedin")]
         public async Task<IActionResult> IsSignedIn()
         {
-            var userName = User.FindFirstValue(ClaimTypes.Name);
             var user = await Mediator.Send(new ValidateTokenService.Command { Token = Request.Headers["Authorization"] });
             if (user.Data is null)
                 return BadRequest();
@@ -72,16 +71,6 @@ namespace Endpoint.API.Controllers
             var result = await Mediator.Send(new TokenService.Command { AppUser = editedUser.Data });
             return HandleResult(ResultDto<UserEditResponseDto>.Success(new UserEditResponseDto(result.Data)));
         }
-
-        #region RefreshToken
-        //[HttpPost]
-        //public async Task<IActionResult> RefreshToken(string token)
-        //{
-        //    var user = await Mediator.Send(new ReTokenService.Command { Token = token });
-        //    return HandleResult(await Mediator.Send(new TokenService.Command { AppUser = user.Data }));
-        //}
-
-        #endregion
 
         #region MyRegion
         //[Authorize]
