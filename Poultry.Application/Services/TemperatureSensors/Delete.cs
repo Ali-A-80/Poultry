@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
-using Poultry.Domain.Entities;
 using Poultry.Persistance.Contexts;
 
 namespace Poultry.Application.Services.TemperatureSensors

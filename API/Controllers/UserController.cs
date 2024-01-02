@@ -72,29 +72,5 @@ namespace Endpoint.API.Controllers
             return HandleResult(ResultDto<UserEditResponseDto>.Success(new UserEditResponseDto(result.Data)));
         }
 
-        #region MyRegion
-        //[Authorize]
-        //[HttpGet("get-current-user")]
-        //public ActionResult<ResultDto<CurrentUserResponseDto>> GetCurrentUser()
-        //{
-        //    var userName = User.FindFirstValue(ClaimTypes.Name);
-        //    var email = User.FindFirstValue(ClaimTypes.Email);
-        //    var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    List<string> roles = new();
-        //    foreach (var item in User.Claims.Where(p => p.Type.EndsWith("role")))
-        //    {
-        //        roles.Add(item.Value);
-        //    }
-
-        //    return Ok(ResultDto<CurrentUserResponseDto>.Success(new CurrentUserResponseDto
-        //    {
-        //        Email = email,
-        //        Roles = roles,
-        //        Id = id,
-        //        UserName = userName
-        //    }));
-        //}
-
-        #endregion
     }
 }

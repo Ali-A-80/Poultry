@@ -7,8 +7,6 @@ namespace Poultry.Application.EntityValidators
     {
         public UserValidator()
         {
-            //RuleFor(x => x.Email).NotEmpty().WithMessage("لطفا ایمیل را وارد کنید")
-            //    .EmailAddress().WithMessage("فرمت ایمیل صحیح نیست");
 
             RuleFor(x => x.Username).NotEmpty().WithMessage("لطفا نام را وارد کنید");
 

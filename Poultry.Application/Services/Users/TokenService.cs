@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Poultry.Application.Core;
 using Poultry.Domain.Entities;
-using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,7 +15,6 @@ namespace Poultry.Application.Services.Users
         public class Command : IRequest<ResultDto<UserResponseDto>>
         {
             public AppUser AppUser { get; set; }
-            //public List<string>? Roles { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, ResultDto<UserResponseDto>>
@@ -32,11 +30,8 @@ namespace Poultry.Application.Services.Users
                 {
                     new (ClaimTypes.Name, request.AppUser.UserName),
                     new (ClaimTypes.NameIdentifier, request.AppUser.Id),
-                    //new (ClaimTypes.Email, request.AppUser.Email),
                 };
 
-                //if (request.Roles != null)
-                //    claims.AddRange(request.Roles.Select(x => new Claim(ClaimTypes.Role, x)));
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Key"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
@@ -56,22 +51,6 @@ namespace Poultry.Application.Services.Users
                 });
             }
 
-            #region KeyGen
-
-            //public string GetKey()
-            //{
-            //    byte[] keyBytes = new byte[64];
-
-            //    // Use RNGCryptoServiceProvider to generate a random key
-            //    using (var rngCsp = new RNGCryptoServiceProvider())
-            //    {
-            //        rngCsp.GetBytes(keyBytes);
-            //    }
-
-            //    // Convert the byte array to a hex string (optional)
-            //    return BitConverter.ToString(keyBytes).Replace("-", string.Empty);
-            //}
-            #endregion
         }
     }
 }

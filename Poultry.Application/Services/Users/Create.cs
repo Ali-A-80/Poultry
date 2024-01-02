@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.EntityValidators;
 using Poultry.Domain.Entities;
@@ -43,20 +42,11 @@ namespace Poultry.Application.Services.Users
                 #region UserCreation
                 var user = new AppUser
                 {
-                    //Email = request.UserRequest.Email,
                     UserName = request.UserRequest.Username,
                 };
                 var result = await _userManager.CreateAsync(user, request.UserRequest.Password);
                 #endregion
 
-                #region RoleCreation
-                //var ExistingRoles = await _roleManager.Roles.AsNoTracking().Select(r => r.Name).ToListAsync(cancellationToken);
-                //var verifiedRoles = request.UserRequest.Roles.Where(p => !ExistingRoles.Contains(p)).ToList();
-                //foreach (var item in verifiedRoles)
-                //{
-                //    await _roleManager.CreateAsync(new IdentityRole(item));
-                //}
-                #endregion
 
                 if (result.Succeeded)
                 {

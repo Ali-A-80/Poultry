@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
-using Poultry.Application.Services.HumiditySensors;
 using Poultry.Application.Validators;
 using Poultry.Domain.Entities;
 using Poultry.Persistance.Contexts;

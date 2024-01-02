@@ -11,9 +11,6 @@
 
         public HealthStatus HealthStatus { get; set; }
 
-
-        //public  Orderby { get; set; }
-
     }
 
     #region ChickenTypeEnum
@@ -28,13 +25,4 @@
 
     #endregion
 
-    #region OrderBy
-    //public enum OrderBy : byte
-    //{
-    //    None = 0,
-    //    Ascending,
-    //    Desending,
-
-    //}
-    #endregion
 }
