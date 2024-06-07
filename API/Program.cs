@@ -1,10 +1,16 @@
+using Endpoint.API.DependencyInjection;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Poultry.Application.Services.Chickens;
+using Poultry.Application.Core;
+using Poultry.Application.Services.Chickens.Handlers;
+using Poultry.Application.Validators.Chickens;
 using Poultry.Domain.Entities;
 using Poultry.Persistance.Contexts;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,9 +22,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-
-#region MyConfigs
+#region Configs
 
 #region DB
 builder.Services.AddDbContext<DatabaseContext>(op =>
@@ -77,29 +81,41 @@ builder.Services.AddCors(options =>
 
 #region MedaitR
 
-builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(ListChickenHandler).Assembly));
+
+builder.Services.AddServicesWithTheirLifetimes(depsConfig =>
+{
+    depsConfig.AssemblyNames = new string[] { "Poultry" };
+});
 #endregion
+
+#region FluentValidation
+
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+
+builder.Services.AddValidatorsFromAssembly(typeof(DeleteChickenValidator).Assembly,
+    includeInternalTypes: true);
 
 #endregion
 
+#endregion
 
 
 var app = builder.Build();
 
-
-
-
 // Configure the HTTP request pipeline.
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("CorsPolicy");
 
-
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.Map("/",
+            () =>
+                $"{Assembly.GetExecutingAssembly().GetName().Name} Vesrion {Assembly.GetExecutingAssembly().GetName().Version} is ready ({app.Environment.EnvironmentName})");
 
 app.MapControllers();
 

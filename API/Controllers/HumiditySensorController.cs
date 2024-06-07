@@ -1,51 +1,65 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Poultry.Application.Services.HumiditySensors;
+using Poultry.Application.Services.HumiditySensors.Commands;
+using Poultry.Application.Services.HumiditySensors.Dtos;
+using Poultry.Application.Services.HumiditySensors.Queries;
 using Poultry.Domain.Entities;
 
-namespace Endpoint.API.Controllers
+namespace Endpoint.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class HumiditySensorController : BaseController
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class HumiditySensorController : BaseController
+    [HttpGet]
+    public async Task<IActionResult> GetHumiditySensors()
     {
-        [HttpGet]
-        public async Task<IActionResult> GetHumiditySensors()
-        {
-            return HandleResult(await Mediator.Send(new List.Query()));
-        }
+        var response = await Mediator.Send(new HumiditySensorListQuery());
 
-        [HttpPost]
-        public async Task<IActionResult> CreateHumiditySensor(HumiditySensorRequestDto humiditySensor)
+        return HandleResult(response);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateHumiditySensor(CreateHumiditySensorRequestDto humiditySensor)
+    {
+        ArgumentNullException.ThrowIfNull(humiditySensor);
+
+        var command = new HumiditySensorCreateCommand
         {
-            return HandleResult(await Mediator.Send(new Create.Command
+            Amount = humiditySensor.Amount,
+            HumidityStatus = humiditySensor.HumidityStatus,
+            ZoneId = humiditySensor.ZoneId
+        };
+
+        var response = await Mediator.Send(command);
+
+        return HandleResult(response);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> EditHumiditySensor(EditHumiditySensorRequestDto humiditySensor)
+    {
+        ArgumentNullException.ThrowIfNull(humiditySensor);
+
+        var command = new HumiditySensorEditCommand
+        {
+            HumiditySensor = new HumiditySensor
             {
-                HumiditySensor = new HumiditySensor
-                {
-                    Amount = humiditySensor.Amount,
-                    HumidityStatus = humiditySensor.HumidityStatus,
-                    ZoneId = humiditySensor.ZoneId
-                }
-            }));
-        }
+                Id = humiditySensor.Id,
+                Amount = humiditySensor.Amount,
+                HumidityStatus = humiditySensor.HumidityStatus
+            }
+        };
 
-        [HttpPut]
-        public async Task<IActionResult> EditHumiditySensor(HumiditySensorRequestDto humiditySensor)
-        {
-            return HandleResult(await Mediator.Send(new Edit.Command
-            {
-                HumiditySensor = new HumiditySensor
-                {
-                    Id = humiditySensor.Id.Value,
-                    Amount = humiditySensor.Amount,
-                    HumidityStatus = humiditySensor.HumidityStatus
-                }
-            }));
-        }
+        var response = await Mediator.Send(command);
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteHumiditySensor(long id)
-        {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
-        }
+        return HandleResult(response);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteHumiditySensor(long id)
+    {
+        var response = await Mediator.Send(new HumiditySensorDeleteCommand { Id = id });
+
+        return HandleResult(response);
     }
 }

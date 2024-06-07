@@ -1,51 +1,58 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Poultry.Application.Services.VentilationSensors;
-using Poultry.Domain.Entities;
+using Poultry.Application.Services.VentilationSensors.Commands;
+using Poultry.Application.Services.VentilationSensors.Dtos;
+using Poultry.Application.Services.VentilationSensors.Queries;
 
-namespace Endpoint.API.Controllers
+namespace Endpoint.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class VentilationSensorController : BaseController
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class VentilationSensorController : BaseController
+    [HttpGet]
+    public async Task<IActionResult> GetVentilationSensors()
     {
-        [HttpGet]
-        public async Task<IActionResult> GetVentilationSensors()
-        {
-            return HandleResult(await Mediator.Send(new List.Query()));
-        }
+        return HandleResult(await Mediator.Send(new VentilationSensorListQuery()));
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateVentilationSensor(VentilationSensorRequestDto ventilationSensor)
-        {
-            return HandleResult(await Mediator.Send(new Create.Command 
-            { 
-                VentilationSensor = new VentilationSensor
-                {
-                    AirFlow = ventilationSensor.AirFlow,
-                    VentilationStatus = ventilationSensor.VentilationStatus,
-                    ZoneId = ventilationSensor.ZoneId
-                } 
-            }));
-        }
+    [HttpPost]
+    public async Task<IActionResult> CreateVentilationSensor(CreateVentilationSensorRequestDto ventilationSensor)
+    {
+        ArgumentNullException.ThrowIfNull(ventilationSensor);
 
-        [HttpPut]
-        public async Task<IActionResult> EditVentilationSensor(VentilationSensorRequestDto ventilationSensor)
+        var command = new VentilationSensorCreateCommand
         {
-            return HandleResult(await Mediator.Send(new Edit.Command 
-            { 
-                VentilationSensor = new VentilationSensor
-                {
-                    VentilationStatus = ventilationSensor.VentilationStatus,
-                    AirFlow = ventilationSensor.AirFlow,
-                    Id = ventilationSensor.Id.Value
-                } 
-            }));
-        }
+            AirFlow = ventilationSensor.AirFlow,
+            VentilationStatus = ventilationSensor.VentilationStatus,
+            ZoneId = ventilationSensor.ZoneId
+        };
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteVentilationSensor(long id)
+        var response = await Mediator.Send(command);
+
+        return HandleResult(response);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> EditVentilationSensor(EditVentilationSensorRequestDto ventilationSensor)
+    {
+        ArgumentNullException.ThrowIfNull(ventilationSensor);
+
+        var command = new VentilationSensorEditCommand
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
-        }
+            VentilationStatus = ventilationSensor.VentilationStatus,
+            AirFlow = ventilationSensor.AirFlow,
+            Id = ventilationSensor.Id
+
+        };
+
+        var response = await Mediator.Send(command);
+
+        return HandleResult(response);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteVentilationSensor(long id)
+    {
+        return HandleResult(await Mediator.Send(new VentilationSensorDeleteCommand { Id = id }));
     }
 }

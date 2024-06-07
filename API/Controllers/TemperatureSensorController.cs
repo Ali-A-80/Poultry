@@ -1,51 +1,62 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Poultry.Application.Services.TemperatureSensors;
-using Poultry.Domain.Entities;
+using Poultry.Application.Services.TemperatureSensors.Commands;
+using Poultry.Application.Services.TemperatureSensors.Dtos;
+using Poultry.Application.Services.TemperatureSensors.Queries;
 
-namespace Endpoint.API.Controllers
+namespace Endpoint.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class TemperatureSensorController : BaseController
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TemperatureSensorController : BaseController
+    [HttpGet]
+    public async Task<IActionResult> GetTemperatureSensors()
     {
-        [HttpGet]
-        public async Task<IActionResult> GetTemperatureSensors()
-        {
-            return HandleResult(await Mediator.Send(new List.Query()));
-        }
+        var response = await Mediator.Send(new TemperatureSensorListQuery());
 
-        [HttpPost]
-        public async Task<IActionResult> CreateTemperatureSensor(TemperatureSensorRequestDto temperatureSensor)
-        {
-            return HandleResult(await Mediator.Send(new Create.Command
-            {
-                TemperatureSensor = new TemperatureSensor
-                {
-                    Amount = temperatureSensor.Amount,
-                    TemperatureStatus = temperatureSensor.TemperatureStatus,
-                    ZoneId = temperatureSensor.ZoneId
-                }
-            }));
-        }
+        return HandleResult(response);
+    }
 
-        [HttpPut]
-        public async Task<IActionResult> EditTemperatureSensor(TemperatureSensorRequestDto temperatureSensor)
-        {
-            return HandleResult(await Mediator.Send(new Edit.Command
-            {
-                TemperatureSensor = new TemperatureSensor
-                {
-                    TemperatureStatus = temperatureSensor.TemperatureStatus,
-                    Id = temperatureSensor.Id.Value,
-                    Amount = temperatureSensor.Amount
-                }
-            }));
-        }
+    [HttpPost]
+    public async Task<IActionResult> CreateTemperatureSensor(CreateTemperatureSensorRequestDto temperatureSensor)
+    {
+        ArgumentNullException.ThrowIfNull(temperatureSensor);
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteTemperatureSensor(long id)
+        var command = new TemperatureSensorCreateCommand
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
-        }
+            Amount = temperatureSensor.Amount,
+            TemperatureStatus = temperatureSensor.TemperatureStatus,
+            ZoneId = temperatureSensor.ZoneId
+        };
+
+        var response = await Mediator.Send(command);
+
+        return HandleResult(response);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> EditTemperatureSensor(EditTemperatureSensorRequestDto temperatureSensor)
+    {
+        ArgumentNullException.ThrowIfNull(temperatureSensor);
+
+        var command = new TemperatureSensorEditCommand
+        {
+            TemperatureStatus = temperatureSensor.TemperatureStatus,
+            Id = temperatureSensor.Id,
+            Amount = temperatureSensor.Amount
+
+        };
+
+        var response = await Mediator.Send(command);
+
+        return HandleResult(response);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteTemperatureSensor(long id)
+    {
+        var response = await Mediator.Send(new TemperatureSensorDeleteCommand { Id = id });
+
+        return HandleResult(response);
     }
 }
