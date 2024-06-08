@@ -1,52 +1,31 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.VentilationSensors.Commands;
 using Poultry.Application.Services.VentilationSensors.Dtos;
-using Poultry.Application.Validators;
-using Poultry.Persistance.Contexts;
+using Poultry.Persistance.Repositories.VentilationSensors;
 
 namespace Poultry.Application.Services.VentilationSensors.Handlers;
 
 public class EditVentilationSensorHandler : IRequestHandler<VentilationSensorEditCommand, ResultDto<VentilationSensorResponseDto>>
 {
 
-    private readonly DatabaseContext _context;
+    private readonly IVentilationSensorCommandRepository _ventilationSensorCommandRepository;
 
-    public EditVentilationSensorHandler(DatabaseContext context)
+    public EditVentilationSensorHandler(IVentilationSensorCommandRepository ventilationSensorCommandRepository)
     {
-        _context = context;
+        _ventilationSensorCommandRepository = ventilationSensorCommandRepository;
     }
+
     public async Task<ResultDto<VentilationSensorResponseDto>> Handle(VentilationSensorEditCommand request, CancellationToken cancellationToken)
     {
-        #region Validation
-        var validation = new CreateVentilationSensorValidator();
-        var validationResult = await validation.ValidateAsync(request.VentilationSensor, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            var errors = new List<string>();
-            foreach (var error in validationResult.Errors)
-            {
-                errors.Add(error.ErrorMessage);
-            }
-            return ResultDto<VentilationSensorResponseDto>.Failure(errors);
-        }
-        #endregion
-
-        var ventilationSensor = await _context.VentilationSensors.FirstOrDefaultAsync(x => x.Id == request.VentilationSensor.Id, cancellationToken);
-
-        if (ventilationSensor is null)
-            return ResultDto<VentilationSensorResponseDto>.Failure(new List<string> { "مورد با شناسه مورد نظر یافت نشد" });
+        var ventilationSensor = await _ventilationSensorCommandRepository.GetById(request.Id, cancellationToken);
 
         ventilationSensor.AirFlow = ventilationSensor.AirFlow;
         ventilationSensor.VentilationStatus = ventilationSensor.VentilationStatus;
         ventilationSensor.UpdateTime = DateTime.Now;
 
-        _context.VentilationSensors.Update(ventilationSensor);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _ventilationSensorCommandRepository.UpdateVentilationSensor(ventilationSensor, cancellationToken);
 
         return ResultDto<VentilationSensorResponseDto>.Success(new VentilationSensorResponseDto(ventilationSensor));
     }
-
 }

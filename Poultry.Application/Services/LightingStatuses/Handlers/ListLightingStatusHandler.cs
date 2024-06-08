@@ -3,25 +3,26 @@ using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.LightingStatuses.Dtos;
 using Poultry.Application.Services.LightingStatuses.Queries;
-using Poultry.Persistance.Contexts;
+using Poultry.Persistance.Repositories.LightingStatuses;
 
 namespace Poultry.Application.Services.LightingStatuses.Handlers;
 
 public class ListLightingStatusHandler : IRequestHandler<LightingStatusListQuery, ResultDto<List<LightingStatusResponseDto>>>
 {
-    private readonly DatabaseContext _context;
+    private readonly ILightingStatusQueryRepository _lightingStatusQueryRepository;
 
-    public ListLightingStatusHandler(DatabaseContext context)
+    public ListLightingStatusHandler(ILightingStatusQueryRepository lightingStatusQueryRepository)
     {
-        _context = context;
+        _lightingStatusQueryRepository = lightingStatusQueryRepository;
     }
+
     public async Task<ResultDto<List<LightingStatusResponseDto>>> Handle(LightingStatusListQuery request, CancellationToken cancellationToken)
     {
-        var query = await _context.LightingStatuses.AsNoTracking()
-            .Select(x => new LightingStatusResponseDto(x))
-            .ToListAsync(cancellationToken);
+        var query = _lightingStatusQueryRepository.GetAll();
 
-        return ResultDto<List<LightingStatusResponseDto>>.Success(query);
+        var result = await query.Select(x => new LightingStatusResponseDto(x)).ToListAsync(cancellationToken);
+
+        return ResultDto<List<LightingStatusResponseDto>>.Success(result);
     }
 
 }

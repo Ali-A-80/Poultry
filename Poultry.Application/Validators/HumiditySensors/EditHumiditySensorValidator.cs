@@ -23,7 +23,7 @@ namespace Poultry.Application.Validators.HumiditySensors
 
         private async Task<bool> Exits(long id, CancellationToken cancellationToken)
         {
-            return await _humiditySensorCommandRepository.HumiditySensorExits(id, cancellationToken);
+            return await _humiditySensorCommandRepository.HumiditySensorExists(id, cancellationToken);
         }
     }
 }

@@ -1,51 +1,32 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.HealthStatuses.Commands;
 using Poultry.Application.Services.HealthStatuses.Dtos;
-using Poultry.Application.Validators;
-using Poultry.Persistance.Contexts;
+using Poultry.Persistance.Repositories.HealthStatuses;
 
 namespace Poultry.Application.Services.HealthStatuses.Handlers;
 
 public class EditHealthStatusHandler : IRequestHandler<HealthStatusEditCommand, ResultDto<HealthStatusResponseDto>>
 {
 
-    private readonly DatabaseContext _context;
+    private readonly IHealthStatusCommandRepository _healthStatusCommandRepository;
 
-    public EditHealthStatusHandler(DatabaseContext context)
+    public EditHealthStatusHandler(IHealthStatusCommandRepository healthStatusCommandRepository)
     {
-        _context = context;
+        _healthStatusCommandRepository = healthStatusCommandRepository;
     }
+
     public async Task<ResultDto<HealthStatusResponseDto>> Handle(HealthStatusEditCommand request, CancellationToken cancellationToken)
     {
-        #region Validation
-        var validation = new EditHealthStatusValidator();
-        var validationResult = await validation.ValidateAsync(request.HealthStatus, cancellationToken);
 
-        if (!validationResult.IsValid)
-        {
-            var errors = new List<string>();
-            foreach (var error in validationResult.Errors)
-            {
-                errors.Add(error.ErrorMessage);
-            }
-            return ResultDto<HealthStatusResponseDto>.Failure(errors);
-        }
-        #endregion
+        var healthStatus = await _healthStatusCommandRepository.GetById(request.Id, cancellationToken);
 
-        var healthStatus = await _context.HealthStatuses.FirstOrDefaultAsync(x => x.Id == request.HealthStatus.Id, cancellationToken);
-
-        if (healthStatus is null)
-            return ResultDto<HealthStatusResponseDto>.Failure(new List<string> { "مورد با شناسه مورد نظر یافت نشد" });
-
-        healthStatus.BodyTemprature = request.HealthStatus.BodyTemprature;
-        healthStatus.CheckupDate = request.HealthStatus.CheckupDate;
-        healthStatus.HealthLevel = request.HealthStatus.HealthLevel;
+        healthStatus.BodyTemprature = request.BodyTemprature;
+        healthStatus.CheckupDate = request.CheckupDate;
+        healthStatus.HealthLevel = request.HealthLevel;
         healthStatus.UpdateTime = DateTime.Now;
 
-        _context.HealthStatuses.Update(healthStatus);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _healthStatusCommandRepository.UpdateHealthStatus(healthStatus, cancellationToken);
 
         return ResultDto<HealthStatusResponseDto>.Success(new HealthStatusResponseDto(healthStatus));
     }

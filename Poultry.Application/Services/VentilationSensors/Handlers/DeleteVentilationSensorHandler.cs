@@ -1,39 +1,28 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.VentilationSensors.Commands;
-using Poultry.Persistance.Contexts;
+using Poultry.Persistance.Repositories.VentilationSensors;
 
 namespace Poultry.Application.Services.VentilationSensors.Handlers;
 
 public class DeleteVentilationSensorHandler : IRequestHandler<VentilationSensorDeleteCommand, ResultDto<Unit>>
 {
 
-    private readonly DatabaseContext _context;
+    private readonly IVentilationSensorCommandRepository _ventilationSensorCommandRepository;
 
-    public DeleteVentilationSensorHandler(DatabaseContext context)
+    public DeleteVentilationSensorHandler(IVentilationSensorCommandRepository ventilationSensorCommandRepository)
     {
-        _context = context;
+        _ventilationSensorCommandRepository = ventilationSensorCommandRepository;
     }
+
     public async Task<ResultDto<Unit>> Handle(VentilationSensorDeleteCommand request, CancellationToken cancellationToken)
     {
-        #region Validation
-        var validation = new VentilationSensorDeleteValidator();
-        var validationResult = await validation.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-            return ResultDto<Unit>.Failure(new List<string> { $"{validationResult.Errors[0].ErrorMessage}" });
-        #endregion
-
-        var ventilationSensor = await _context.VentilationSensors.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-
-        if (ventilationSensor is null)
-            return ResultDto<Unit>.Failure(new List<string> { "مورد با شناسه مورد نظر یافت نشد" });
+        var ventilationSensor = await _ventilationSensorCommandRepository.GetById(request.Id, cancellationToken);
 
         ventilationSensor.IsRemoved = true;
         ventilationSensor.RemoveTime = DateTime.Now;
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _ventilationSensorCommandRepository.UpdateVentilationSensor(ventilationSensor, cancellationToken);
 
         return ResultDto<Unit>.Success(Unit.Value);
     }

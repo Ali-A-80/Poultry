@@ -1,25 +1,26 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Poultry.Application.Core;
 using Poultry.Application.Services.Users.Commands;
-using Poultry.Domain.Entities;
+using Poultry.Persistance.Repositories.Users;
 
 namespace Poultry.Application.Services.Users.Handlers;
 
 public class IsSignedInUserHandler : IRequestHandler<UserIsSignedInCommand, ResultDto<bool>>
 {
-    private readonly UserManager<AppUser> _userManager;
+    private readonly IUserQueryRepository _userQueryRepository;
 
-    public IsSignedInUserHandler(UserManager<AppUser> userManager)
+    public IsSignedInUserHandler(IUserQueryRepository userQueryRepository)
     {
-        _userManager = userManager;
+        _userQueryRepository = userQueryRepository;
     }
+
     public async Task<ResultDto<bool>> Handle(UserIsSignedInCommand request, CancellationToken cancellationToken)
     {
-        var result = await _userManager.FindByNameAsync(request.Principal.Identity.Name);
-        if (result is not null)
-            return ResultDto<bool>.Success(true);
-        return ResultDto<bool>.Success(false);
+        var result = await _userQueryRepository.GetByName(request.Principal.Identity!.Name!);
+
+        var response = result != null;
+
+        return ResultDto<bool>.Success(response);
     }
 
 }

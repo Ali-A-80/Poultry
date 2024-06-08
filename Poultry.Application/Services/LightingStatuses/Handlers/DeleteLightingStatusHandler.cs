@@ -1,39 +1,28 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.LightingStatuses.Commands;
-using Poultry.Persistance.Contexts;
+using Poultry.Persistance.Repositories.LightingStatuses;
 
 namespace Poultry.Application.Services.LightingStatuses.Handlers;
 
 public class DeleteLightingStatusHandler : IRequestHandler<LightingStatusDeleteCommand, ResultDto<Unit>>
 {
 
-    private readonly DatabaseContext _context;
+    private readonly ILightingStatusCommandRepository _lightingStatusCommandRepository;
 
-    public DeleteLightingStatusHandler(DatabaseContext context)
+    public DeleteLightingStatusHandler(ILightingStatusCommandRepository lightingStatusCommandRepository)
     {
-        _context = context;
+        _lightingStatusCommandRepository = lightingStatusCommandRepository;
     }
+
     public async Task<ResultDto<Unit>> Handle(LightingStatusDeleteCommand request, CancellationToken cancellationToken)
     {
-        #region Validation
-        var validation = new LightingStatusDeleteValidator();
-        var validationResult = await validation.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-            return ResultDto<Unit>.Failure(new List<string> { $"{validationResult.Errors[0].ErrorMessage}" });
-        #endregion
-
-        var lightingStatus = await _context.HumiditySensors.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-
-        if (lightingStatus is null)
-            return ResultDto<Unit>.Failure(new List<string> { "مورد با شناسه مورد نظر یافت نشد" });
+        var lightingStatus = await _lightingStatusCommandRepository.GetById(request.Id, cancellationToken);
 
         lightingStatus.IsRemoved = true;
         lightingStatus.RemoveTime = DateTime.Now;
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _lightingStatusCommandRepository.UpdateLightingStatus(lightingStatus, cancellationToken);
 
         return ResultDto<Unit>.Success(Unit.Value);
     }

@@ -3,24 +3,26 @@ using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.FoodServices.Dtos;
 using Poultry.Application.Services.FoodServices.Queries;
-using Poultry.Persistance.Contexts;
+using Poultry.Persistance.Repositories.FoodServices;
 
 namespace Poultry.Application.Services.FoodServices.Handlers;
 
 public class ListFoodServiceHandler : IRequestHandler<FoodServiceListQuery, ResultDto<List<FoodServiceResponseDto>>>
 {
-    private readonly DatabaseContext _context;
+    private readonly IFoodServiceQueryRepository _foodServiceQueryRepository;
 
-    public ListFoodServiceHandler(DatabaseContext context)
+    public ListFoodServiceHandler(IFoodServiceQueryRepository foodServiceQueryRepository)
     {
-        _context = context;
+        _foodServiceQueryRepository = foodServiceQueryRepository;
     }
+
     public async Task<ResultDto<List<FoodServiceResponseDto>>> Handle(FoodServiceListQuery request, CancellationToken cancellationToken)
     {
-        var query = await _context.FoodServices.AsNoTracking()
-            .Select(x => new FoodServiceResponseDto(x)).ToListAsync(cancellationToken);
+        var query = _foodServiceQueryRepository.GetAll();
 
-        return ResultDto<List<FoodServiceResponseDto>>.Success(query);
+        var result = await query.Select(x => new FoodServiceResponseDto(x)).ToListAsync(cancellationToken);
+
+        return ResultDto<List<FoodServiceResponseDto>>.Success(result);
     }
 
 }

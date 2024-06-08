@@ -5,5 +5,5 @@ namespace Poultry.Persistance.Repositories.Chickens;
 
 public interface IChickenQueryRepository
 {
-    IIncludableQueryable<Chicken, HealthStatus> GetChickenList(CancellationToken cancellationToken);
+    IIncludableQueryable<Chicken, HealthStatus> GetAll(CancellationToken cancellationToken);
 }

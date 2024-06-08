@@ -3,26 +3,26 @@ using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.HealthStatuses.Dtos;
 using Poultry.Application.Services.HealthStatuses.Queries;
-using Poultry.Persistance.Contexts;
+using Poultry.Persistance.Repositories.HealthStatuses;
 
 namespace Poultry.Application.Services.HealthStatuses.Handlers;
 
 public class ListHealthStatusHandler : IRequestHandler<HealthStatusListQuery, ResultDto<List<HealthStatusResponseDto>>>
 {
 
-    private readonly DatabaseContext _context;
+    private readonly IHealthStatusQueryRepository _healthStatusQueryRepository;
 
-    public ListHealthStatusHandler(DatabaseContext context)
+    public ListHealthStatusHandler(IHealthStatusQueryRepository healthStatusQueryRepository)
     {
-        _context = context;
+        _healthStatusQueryRepository = healthStatusQueryRepository;
     }
     public async Task<ResultDto<List<HealthStatusResponseDto>>> Handle(HealthStatusListQuery request, CancellationToken cancellationToken)
     {
-        var query = await _context.HealthStatuses.AsNoTracking()
-                .Select(x => new HealthStatusResponseDto(x))
-                .ToListAsync(cancellationToken);
+        var query = _healthStatusQueryRepository.GetAll();
 
-        return ResultDto<List<HealthStatusResponseDto>>.Success(query);
+        var result = await query.Select(x => new HealthStatusResponseDto(x)).ToListAsync(cancellationToken);
+
+        return ResultDto<List<HealthStatusResponseDto>>.Success(result);
     }
 
 }

@@ -1,33 +1,39 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Poultry.Application.Core;
 using Poultry.Application.Services.Users.Commands;
 using Poultry.Domain.Entities;
+using Poultry.Persistance.Repositories.Users;
 
 namespace Poultry.Application.Services.Users.Handlers;
 
 public partial class EditUserHandler : IRequestHandler<UserEditCommand, ResultDto<AppUser>>
 {
 
-    private readonly UserManager<AppUser> _userManager;
+    private readonly IUserCommandRepository _userCommandRepository;
 
-    public EditUserHandler(UserManager<AppUser> userManager)
+    public EditUserHandler(IUserCommandRepository userCommandRepository)
     {
-        _userManager = userManager;
+        _userCommandRepository = userCommandRepository;
     }
     public async Task<ResultDto<AppUser>> Handle(UserEditCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByNameAsync(request.Principal.Identity.Name);
+        var user = await _userCommandRepository.GetByName(request.Principal.Identity!.Name!);
 
-        if (user is null)
-            return ResultDto<AppUser>.Failure(new List<string> { "کاربر یافت نشد" });
+        user.UserName = request.UserName;
+        user.Email = request.Email;
+        user.PhoneNumber = request.PhoneNumber;
+        
+        var response = await _userCommandRepository.UpdateUser(user, request.Password);
 
-        user.UserName = request.UserEdit.UserName;
-        user.Email = request.UserEdit.Email;
-        user.PhoneNumber = request.UserEdit.PhoneNumber;
-        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        await _userManager.ResetPasswordAsync(user, token, request.UserEdit.Password);
-        await _userManager.UpdateAsync(user);
+        if (!response.Succeeded)
+        {
+            List<string> managerErrors = new();
+            foreach (var item in response.Errors)
+            {
+                managerErrors.Add(item.Description);
+            }
+            return ResultDto<AppUser>.Failure(managerErrors);
+        }
 
         return ResultDto<AppUser>.Success(user);
     }

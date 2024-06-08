@@ -3,26 +3,28 @@ using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.TemperatureSensors.Dtos;
 using Poultry.Application.Services.TemperatureSensors.Queries;
-using Poultry.Persistance.Contexts;
+using Poultry.Persistance.Repositories.TemperatureSensors;
 
 namespace Poultry.Application.Services.TemperatureSensors.Handlers;
 
 public class ListTemperatureSensorHandler : IRequestHandler<TemperatureSensorListQuery, ResultDto<List<TemperatureSensorResponseDto>>>
 {
 
-    private readonly DatabaseContext _context;
+    private readonly ITemperatureSensorQueryRepository _temperatureSensorQueryRepository;
 
-    public ListTemperatureSensorHandler(DatabaseContext context)
+    public ListTemperatureSensorHandler(ITemperatureSensorQueryRepository temperatureSensorQueryRepository)
     {
-        _context = context;
+        _temperatureSensorQueryRepository = temperatureSensorQueryRepository;
     }
+
     public async Task<ResultDto<List<TemperatureSensorResponseDto>>> Handle(TemperatureSensorListQuery request, CancellationToken cancellationToken)
     {
-        var query = await _context.TemperatureSensors.AsNoTracking()
-            .Select(x => new TemperatureSensorResponseDto(x))
+        var query = _temperatureSensorQueryRepository.GetAll();
+
+        var result = await query.Select(x => new TemperatureSensorResponseDto(x))
             .ToListAsync(cancellationToken);
 
-        return ResultDto<List<TemperatureSensorResponseDto>>.Success(query);
+        return ResultDto<List<TemperatureSensorResponseDto>>.Success(result);
     }
 
 }

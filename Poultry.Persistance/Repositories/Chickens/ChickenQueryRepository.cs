@@ -15,7 +15,7 @@ public class ChickenQueryRepository : IChickenQueryRepository, IScopedLifetime
         _context = context;
     }
 
-    public IIncludableQueryable<Chicken, HealthStatus> GetChickenList(CancellationToken cancellationToken)
+    public IIncludableQueryable<Chicken, HealthStatus> GetAll(CancellationToken cancellationToken)
     {
         return _context.Chickens.AsNoTracking()
                                 .Include(x => x.HealthStatus);

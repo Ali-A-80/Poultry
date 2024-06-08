@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.Chickens.Dtos;
 using Poultry.Application.Services.Chickens.Queries;
@@ -18,9 +19,9 @@ public class ListChickenHandler : IRequestHandler<ChickenListQuery, ResultDto<Li
 
     public async Task<ResultDto<List<ChickenResponseDto>>> Handle(ChickenListQuery request, CancellationToken cancellationToken)
     {
-        var query = _chickenQueryRepository.GetChickenList(cancellationToken);
+        var query = _chickenQueryRepository.GetAll(cancellationToken);
 
-        var result = query.Select(x => new ChickenResponseDto(x)).ToList();
+        var result = await query.Select(x => new ChickenResponseDto(x)).ToListAsync(cancellationToken);
 
         return ResultDto<List<ChickenResponseDto>>.Success(result);
     }
