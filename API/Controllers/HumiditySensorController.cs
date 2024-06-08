@@ -42,12 +42,9 @@ public class HumiditySensorController : BaseController
 
         var command = new HumiditySensorEditCommand
         {
-            HumiditySensor = new HumiditySensor
-            {
-                Id = humiditySensor.Id,
-                Amount = humiditySensor.Amount,
-                HumidityStatus = humiditySensor.HumidityStatus
-            }
+            Id = humiditySensor.Id,
+            Amount = humiditySensor.Amount,
+            HumidityStatus = humiditySensor.HumidityStatus
         };
 
         var response = await Mediator.Send(command);

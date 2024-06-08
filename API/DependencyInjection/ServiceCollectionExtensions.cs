@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Poultry.Persistance.Lifetimes;
+using System.Reflection;
 
 namespace Endpoint.API.DependencyInjection;
 

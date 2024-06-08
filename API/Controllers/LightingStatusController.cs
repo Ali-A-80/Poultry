@@ -25,12 +25,9 @@ public class LightingStatusController : BaseController
 
         var command = new LightingStatusEditCommand
         {
-            LightingStatus = new LightingStatus
-            {
-                Id = lightingStatus.Id,
-                Amount = lightingStatus.Amount,
-                LightingStatusType = lightingStatus.LightingStatusType
-            }
+            Id = lightingStatus.Id,
+            Amount = lightingStatus.Amount,
+            LightingStatusType = lightingStatus.LightingStatusType
         };
 
         var response = await Mediator.Send(command);
