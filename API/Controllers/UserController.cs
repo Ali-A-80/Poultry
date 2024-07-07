@@ -23,6 +23,8 @@ public class UserController : BaseController
         };
 
         var userCreateResponse = await Mediator.Send(command);
+        if (!userCreateResponse.IsSuccess)
+            return BadRequest(ResultDto<string>.Failure(userCreateResponse.Errors));
 
         var userTokenServiceResponse = await Mediator.Send(new UserTokenServiceCommand { AppUser = userCreateResponse.Data });
 
