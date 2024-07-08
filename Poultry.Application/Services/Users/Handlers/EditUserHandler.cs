@@ -23,7 +23,7 @@ public partial class EditUserHandler : IRequestHandler<UserEditCommand, ResultDt
         user.Email = request.Email;
         user.PhoneNumber = request.PhoneNumber;
         
-        var response = await _userCommandRepository.UpdateUser(user, request.Password);
+        var response = await _userCommandRepository.UpdateUser(user);
 
         if (!response.Succeeded)
         {

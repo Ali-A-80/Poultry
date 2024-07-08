@@ -25,12 +25,8 @@ public class UserCommandRepository : IUserCommandRepository, IScopedLifetime
         return await _userManager.FindByNameAsync(userName);
     }
 
-    public async Task<IdentityResult> UpdateUser(AppUser user, string password)
+    public async Task<IdentityResult> UpdateUser(AppUser user)
     {
-        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-        await _userManager.ResetPasswordAsync(user, token, password);
-
         var result = await _userManager.UpdateAsync(user);
 
         return result;
