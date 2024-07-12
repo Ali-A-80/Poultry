@@ -13,8 +13,6 @@ public class DeleteVentilationSensorValidator : AbstractValidator<VentilationSen
     {
         _ventilationSensorCommandRepository = ventilationSensorCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exists).WithMessage("سنسور تهویه با شناسه مورد نظر یافت نشد");
     }
 

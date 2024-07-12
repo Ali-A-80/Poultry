@@ -13,8 +13,6 @@ public class DeleteHealthStatusValidator : AbstractValidator<HealthStatusDeleteC
     {
         _healthStatusCommandRepository = healthStatusCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exits).WithMessage("وضعیت سلامت با شناسه مورد نظر یافت نشد");
     }
 

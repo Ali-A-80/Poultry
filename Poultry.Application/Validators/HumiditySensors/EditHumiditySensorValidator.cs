@@ -12,13 +12,9 @@ public class EditHumiditySensorValidator : AbstractValidator<HumiditySensorEditC
     {
         _humiditySensorCommandRepository = humiditySensorCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exits).WithMessage("سنسور رطوبت با شناسه مورد نظر یافت نشد");
 
         RuleFor(x => x.HumidityStatus).IsInEnum().WithMessage("وضعیت رطوبت را به درستی وارد کنید");
-
-        RuleFor(x => x.Amount).NotEmpty().WithMessage("مقدار را وارد کنید");
     }
 
     private async Task<bool> Exits(long id, CancellationToken cancellationToken)

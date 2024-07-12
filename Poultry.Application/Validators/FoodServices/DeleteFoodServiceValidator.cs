@@ -12,8 +12,6 @@ public class DeleteFoodServiceValidator : AbstractValidator<FoodServiceDeleteCom
     {
         _foodServiceCommandRepository = foodServiceCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exists).WithMessage("سرویس مورد نظر یافت نشد");
     }
 

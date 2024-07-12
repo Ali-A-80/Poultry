@@ -13,8 +13,6 @@ public class DeleteZoneValidator : AbstractValidator<ZoneDeleteCommand>
     {
         _zoneCommandRepository = zoneCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exists).WithMessage("ناحیه با شناسه مورد نظر یافت نشد");
     }
 

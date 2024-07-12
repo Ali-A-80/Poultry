@@ -12,13 +12,9 @@ public class EditTemperatureSensorValidator : AbstractValidator<TemperatureSenso
     {
         _temperatureSensorCommandRepository = temperatureSensorCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exists).WithMessage("سنسور دما با شناسه مورد نظر یافت نشد");
 
         RuleFor(x => x.TemperatureStatus).IsInEnum().WithMessage("وضعیت دما را به درستی وارد کنید");
-
-        RuleFor(x => x.Amount).NotNull().WithMessage("مقدار را وارد کنید");
     }
 
     private async Task<bool> Exists(long temperatureSensorId, CancellationToken cancellationToken)

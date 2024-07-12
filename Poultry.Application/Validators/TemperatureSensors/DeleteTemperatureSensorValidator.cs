@@ -13,8 +13,6 @@ public class DeleteTemperatureSensorValidator : AbstractValidator<TemperatureSen
     {
         _temperatureSensorCommandRepository = temperatureSensorCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exists).WithMessage("سنسور دما با شناسه مورد نظر یافت نشد");
     }
 

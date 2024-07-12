@@ -8,7 +8,5 @@ public class CreateVentilationSensorValidator : AbstractValidator<VentilationSen
     public CreateVentilationSensorValidator()
     {
         RuleFor(x => x.VentilationStatus).IsInEnum().WithMessage("وضعیت تهویه را به درستی وارد کنید");
-
-        RuleFor(x => x.AirFlow).NotNull().WithMessage("مقدار جریان هوا را وارد کنید");
     }
 }

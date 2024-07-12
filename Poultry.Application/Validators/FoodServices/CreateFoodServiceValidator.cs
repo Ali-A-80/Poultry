@@ -7,8 +7,6 @@ public class CreateFoodServiceValidator : AbstractValidator<FoodServiceCreateCom
 {
     public CreateFoodServiceValidator()
     {
-        RuleFor(x => x.Amount).NotNull().WithMessage("لطفا مقدار را وارد کنید");
-
         RuleFor(x => x.FoodType).IsInEnum().WithMessage("لطفا نوع غذا را به درستی وارد کنید");
     }
 }

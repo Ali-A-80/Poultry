@@ -12,8 +12,6 @@ public class EditZoneValidator : AbstractValidator<ZoneEditCommand>
     {
         _zoneCommandRepository = zoneCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exists).WithMessage("ناحیه با شناسه مورد نظر یافت نشد");
 
         RuleFor(x => x.ZoneType).IsInEnum().WithMessage("نوع ناحیه را به درستی مشخص کنید");

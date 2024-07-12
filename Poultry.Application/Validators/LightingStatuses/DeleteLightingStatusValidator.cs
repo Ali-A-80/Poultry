@@ -13,8 +13,6 @@ public class DeleteLightingStatusValidator : AbstractValidator<LightingStatusDel
     {
         _lightingStatusCommandRepository = lightingStatusCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exists).WithMessage("وضعیت روشنایی با شناسه مورد نظر یافت نشد");
     }
 

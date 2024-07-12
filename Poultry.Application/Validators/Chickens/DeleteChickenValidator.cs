@@ -12,8 +12,6 @@ public class DeleteChickenValidator : AbstractValidator<DeleteChickenCommand>
     {
         _chickenCommandRepository = chickenCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exists).WithMessage("مرغ با شناسه وارد شده وجود ندارد");
     }
 

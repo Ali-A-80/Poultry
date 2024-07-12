@@ -12,16 +12,11 @@ public class EditHealthStatusValidator : AbstractValidator<HealthStatusEditComma
     {
         _healthStatusCommandRepository = healthStatusCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exits).WithMessage("وضعیت سلامت با شناسه مورد نظر یافت نشد");
-
-        RuleFor(x => x.BodyTemprature).NotEmpty().WithMessage("دمای بدن را وارد کنید");
 
         RuleFor(x => x.HealthLevel).IsInEnum().WithMessage("میزان سلامتی را به درستی وارد کنید");
 
         RuleFor(x => x.CheckupDate).NotEmpty().WithMessage("تاریخ چکاپ را وارد کنید");
-
     }
 
     private async Task<bool> Exits(long healthStatusId, CancellationToken cancellationToken)

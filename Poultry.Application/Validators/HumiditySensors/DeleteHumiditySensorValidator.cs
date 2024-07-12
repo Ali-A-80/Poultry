@@ -13,8 +13,6 @@ public class DeleteHumiditySensorValidator : AbstractValidator<HumiditySensorDel
     {
         _humiditySensorCommandRepository = humiditySensorCommandRepository;
 
-        RuleFor(x => x.Id).NotEmpty().WithMessage("شناسه را وارد کنید");
-
         RuleFor(x => x.Id).MustAsync(Exists).WithMessage("سنسور رطوبت با شناسه مورد نظر یافت نشد");
     }
 
