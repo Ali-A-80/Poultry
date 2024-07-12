@@ -1,6 +1,6 @@
 ﻿using Poultry.Domain.Entities;
 
-namespace Poultry.Persistance.Repositories.VentilationSensors;
+namespace Poultry.Domain.Repositories.VentilationSensors;
 
 public interface IVentilationSensorQueryRepository
 {

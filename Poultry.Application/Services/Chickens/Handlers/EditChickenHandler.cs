@@ -2,7 +2,7 @@
 using Poultry.Application.Core;
 using Poultry.Application.Services.Chickens.Commands;
 using Poultry.Application.Services.Chickens.Dtos;
-using Poultry.Persistance.Repositories.Chickens;
+using Poultry.Domain.Repositories.Chickens;
 
 namespace Poultry.Application.Services.Chickens.Handlers;
 

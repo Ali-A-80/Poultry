@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Poultry.Domain.Entities;
+using Poultry.Domain.Repositories.TemperatureSensors;
 using Poultry.Persistance.Contexts;
 using Poultry.Persistance.Lifetimes;
 

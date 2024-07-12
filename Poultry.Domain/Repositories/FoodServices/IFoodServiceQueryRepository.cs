@@ -1,6 +1,6 @@
 ﻿using Poultry.Domain.Entities;
 
-namespace Poultry.Persistance.Repositories.FoodServices;
+namespace Poultry.Domain.Repositories.FoodServices;
 
 public interface IFoodServiceQueryRepository
 {

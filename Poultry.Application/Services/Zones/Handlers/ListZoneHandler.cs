@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.Zones.Dtos;
 using Poultry.Application.Services.Zones.Queries;
-using Poultry.Persistance.Repositories.Zones;
+using Poultry.Domain.Repositories.Zones;
 
 namespace Poultry.Application.Services.Zones.Handlers;
 

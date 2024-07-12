@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.Chickens.Dtos;
 using Poultry.Application.Services.Chickens.Queries;
-using Poultry.Persistance.Repositories.Chickens;
+using Poultry.Domain.Repositories.Chickens;
 
 namespace Poultry.Application.Services.Chickens.Handlers;
 

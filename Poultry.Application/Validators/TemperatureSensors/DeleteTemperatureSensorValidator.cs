@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Poultry.Application.Services.TemperatureSensors.Commands;
-using Poultry.Persistance.Repositories.TemperatureSensors;
+using Poultry.Domain.Repositories.TemperatureSensors;
 
 namespace Poultry.Application.Validators.TemperatureSensors;
 

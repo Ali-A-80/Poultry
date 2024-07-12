@@ -1,6 +1,6 @@
 ﻿using Poultry.Domain.Entities;
 
-namespace Poultry.Persistance.Repositories.HealthStatuses;
+namespace Poultry.Domain.Repositories.HealthStatuses;
 
 public interface IHealthStatusQueryRepository
 {

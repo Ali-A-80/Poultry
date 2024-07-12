@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Poultry.Application.Services.Zones.Commands;
-using Poultry.Persistance.Repositories.Zones;
+using Poultry.Domain.Repositories.Zones;
 
 namespace Poultry.Application.Validators.Zones;
 

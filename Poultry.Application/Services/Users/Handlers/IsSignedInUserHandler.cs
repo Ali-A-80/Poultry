@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Poultry.Application.Core;
 using Poultry.Application.Services.Users.Commands;
-using Poultry.Persistance.Repositories.Users;
+using Poultry.Domain.Repositories.Users;
 
 namespace Poultry.Application.Services.Users.Handlers;
 

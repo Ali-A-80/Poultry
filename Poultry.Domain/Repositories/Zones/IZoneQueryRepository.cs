@@ -1,6 +1,6 @@
 ﻿using Poultry.Domain.Entities;
 
-namespace Poultry.Persistance.Repositories.Zones;
+namespace Poultry.Domain.Repositories.Zones;
 
 public interface IZoneQueryRepository
 {

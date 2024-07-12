@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Poultry.Application.Core;
 using Poultry.Application.Services.HealthStatuses.Commands;
-using Poultry.Persistance.Repositories.HealthStatuses;
+using Poultry.Domain.Repositories.HealthStatuses;
 
 namespace Poultry.Application.Services.HealthStatuses.Handlers;
 

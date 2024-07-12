@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Poultry.Application.Services.FoodServices.Commands;
-using Poultry.Persistance.Repositories.FoodServices;
+using Poultry.Domain.Repositories.FoodServices;
 
 namespace Poultry.Application.Validators.FoodServices;
 

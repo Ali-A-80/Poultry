@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Poultry.Domain.Entities;
+using Poultry.Domain.Repositories.Users;
 using Poultry.Persistance.Lifetimes;
 
 namespace Poultry.Persistance.Repositories.Users;

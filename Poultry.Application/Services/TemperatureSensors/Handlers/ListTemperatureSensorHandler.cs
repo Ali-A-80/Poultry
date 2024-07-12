@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.TemperatureSensors.Dtos;
 using Poultry.Application.Services.TemperatureSensors.Queries;
-using Poultry.Persistance.Repositories.TemperatureSensors;
+using Poultry.Domain.Repositories.TemperatureSensors;
 
 namespace Poultry.Application.Services.TemperatureSensors.Handlers;
 

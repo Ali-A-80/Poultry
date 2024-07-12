@@ -2,7 +2,7 @@
 using Poultry.Application.Core;
 using Poultry.Application.Services.HumiditySensors.Commands;
 using Poultry.Application.Services.HumiditySensors.Dtos;
-using Poultry.Persistance.Repositories.HumiditySensors;
+using Poultry.Domain.Repositories.HumiditySensors;
 
 namespace Poultry.Application.Services.HumiditySensors.Handlers;
 

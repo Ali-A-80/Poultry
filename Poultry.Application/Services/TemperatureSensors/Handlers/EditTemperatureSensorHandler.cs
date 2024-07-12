@@ -2,7 +2,7 @@
 using Poultry.Application.Core;
 using Poultry.Application.Services.TemperatureSensors.Commands;
 using Poultry.Application.Services.TemperatureSensors.Dtos;
-using Poultry.Persistance.Repositories.TemperatureSensors;
+using Poultry.Domain.Repositories.TemperatureSensors;
 
 namespace Poultry.Application.Services.TemperatureSensors.Handlers;
 

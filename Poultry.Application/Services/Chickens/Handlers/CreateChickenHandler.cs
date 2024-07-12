@@ -3,8 +3,8 @@ using Poultry.Application.Core;
 using Poultry.Application.Services.Chickens.Commands;
 using Poultry.Application.Services.Chickens.Dtos;
 using Poultry.Domain.Entities;
-using Poultry.Persistance.Repositories.Chickens;
-using Poultry.Persistance.Repositories.HealthStatuses;
+using Poultry.Domain.Repositories.Chickens;
+using Poultry.Domain.Repositories.HealthStatuses;
 
 namespace Poultry.Application.Services.Chickens.Handlers;
 

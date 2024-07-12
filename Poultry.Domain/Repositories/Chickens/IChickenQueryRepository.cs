@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
 using Poultry.Domain.Entities;
 
-namespace Poultry.Persistance.Repositories.Chickens;
+namespace Poultry.Domain.Repositories.Chickens;
 
 public interface IChickenQueryRepository
 {

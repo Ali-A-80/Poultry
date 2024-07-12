@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Poultry.Application.Core;
 using Poultry.Application.Services.FoodServices.Commands;
-using Poultry.Persistance.Repositories.FoodServices;
+using Poultry.Domain.Repositories.FoodServices;
 
 namespace Poultry.Application.Services.FoodServices.Handlers;
 

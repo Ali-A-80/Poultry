@@ -1,6 +1,6 @@
 ﻿using Poultry.Domain.Entities;
 
-namespace Poultry.Persistance.Repositories.Users;
+namespace Poultry.Domain.Repositories.Users;
 
 public interface IUserQueryRepository
 {

@@ -1,6 +1,6 @@
 ﻿using Poultry.Domain.Entities;
 
-namespace Poultry.Persistance.Repositories.TemperatureSensors;
+namespace Poultry.Domain.Repositories.TemperatureSensors;
 
 public interface ITemperatureSensorQueryRepository
 {

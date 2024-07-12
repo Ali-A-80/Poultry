@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Poultry.Domain.Entities;
+using Poultry.Domain.Repositories.Chickens;
 using Poultry.Persistance.Contexts;
 using Poultry.Persistance.Lifetimes;
 

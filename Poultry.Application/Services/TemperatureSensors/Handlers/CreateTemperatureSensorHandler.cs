@@ -3,8 +3,8 @@ using Poultry.Application.Core;
 using Poultry.Application.Services.TemperatureSensors.Commands;
 using Poultry.Application.Services.TemperatureSensors.Dtos;
 using Poultry.Domain.Entities;
-using Poultry.Persistance.Repositories.TemperatureSensors;
-using Poultry.Persistance.Repositories.Zones;
+using Poultry.Domain.Repositories.TemperatureSensors;
+using Poultry.Domain.Repositories.Zones;
 
 namespace Poultry.Application.Services.TemperatureSensors.Handlers;
 

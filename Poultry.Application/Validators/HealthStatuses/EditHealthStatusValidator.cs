@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Poultry.Application.Services.HealthStatuses.Commands;
-using Poultry.Persistance.Repositories.HealthStatuses;
+using Poultry.Domain.Repositories.HealthStatuses;
 
 namespace Poultry.Application.Validators.HealthStatuses;
 

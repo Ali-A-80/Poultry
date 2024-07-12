@@ -1,6 +1,6 @@
 ﻿using Poultry.Domain.Entities;
 
-namespace Poultry.Persistance.Repositories.HumiditySensors;
+namespace Poultry.Domain.Repositories.HumiditySensors;
 
 public interface IHumiditySensorQueryRepository
 {

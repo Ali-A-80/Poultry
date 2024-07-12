@@ -1,11 +1,10 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Poultry.Application.Core;
 using Poultry.Application.Services.VentilationSensors.Commands;
 using Poultry.Application.Services.VentilationSensors.Dtos;
 using Poultry.Domain.Entities;
-using Poultry.Persistance.Repositories.VentilationSensors;
-using Poultry.Persistance.Repositories.Zones;
+using Poultry.Domain.Repositories.VentilationSensors;
+using Poultry.Domain.Repositories.Zones;
 
 namespace Poultry.Application.Services.VentilationSensors.Handlers;
 

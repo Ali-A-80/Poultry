@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Poultry.Application.Core;
 using Poultry.Application.Services.LightingStatuses.Commands;
-using Poultry.Persistance.Repositories.LightingStatuses;
+using Poultry.Domain.Repositories.LightingStatuses;
 
 namespace Poultry.Application.Services.LightingStatuses.Handlers;
 

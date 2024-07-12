@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Poultry.Application.Core;
 using Poultry.Application.Services.VentilationSensors.Commands;
-using Poultry.Persistance.Repositories.VentilationSensors;
+using Poultry.Domain.Repositories.VentilationSensors;
 
 namespace Poultry.Application.Services.VentilationSensors.Handlers;
 

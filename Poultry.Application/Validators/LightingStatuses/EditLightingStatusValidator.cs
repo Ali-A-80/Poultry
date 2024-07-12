@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Poultry.Application.Services.LightingStatuses.Commands;
-using Poultry.Persistance.Repositories.LightingStatuses;
+using Poultry.Domain.Repositories.LightingStatuses;
 
 namespace Poultry.Application.Validators.LightingStatuses;
 

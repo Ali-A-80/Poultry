@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Poultry.Application.Services.VentilationSensors.Commands;
-using Poultry.Persistance.Repositories.VentilationSensors;
+using Poultry.Domain.Repositories.VentilationSensors;
 
 namespace Poultry.Application.Validators.VentilationSensors;
 

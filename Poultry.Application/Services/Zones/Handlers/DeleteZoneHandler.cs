@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Poultry.Application.Core;
 using Poultry.Application.Services.Zones.Commands;
-using Poultry.Persistance.Repositories.Zones;
+using Poultry.Domain.Repositories.Zones;
 
 namespace Poultry.Application.Services.Zones.Handlers;
 
