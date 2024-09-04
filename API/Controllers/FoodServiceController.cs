@@ -1,50 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Poultry.Application.Services.FoodServices;
-using Poultry.Domain.Entities;
+using Poultry.Application.Services.FoodServices.Commands;
+using Poultry.Application.Services.FoodServices.Dtos;
+using Poultry.Application.Services.FoodServices.Queries;
 
-namespace Endpoint.API.Controllers
+namespace Endpoint.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class FoodServiceController : BaseController
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class FoodServiceController : BaseController
+    [HttpGet]
+    public async Task<IActionResult> GetFoodServices()
     {
-        [HttpGet]
-        public async Task<IActionResult> GetFoodServices()
-        {
-            return HandleResult(await Mediator.Send(new List.Query()));
-        }
+        var response = await Mediator.Send(new FoodServiceListQuery());
 
-        [HttpPost]
-        public async Task<IActionResult> CreateFoodService(FoodServiceRequestDto chicken)
-        {
-            return HandleResult(await Mediator.Send(new Create.Command
-            {
-                FoodService = new FoodService
-                {
-                    FoodType = chicken.FoodType,
-                    Amount = chicken.Amount,
-                }
-            }));
-        }
+        return HandleResult(response);
+    }
 
-        [HttpPut]
-        public async Task<IActionResult> EditFoodService(FoodServiceRequestDto chicken)
-        {
-            return HandleResult(await Mediator.Send(new Edit.Command
-            {
-                FoodService = new FoodService
-                {
-                    Id = chicken.Id.Value,
-                    Amount = chicken.Amount,
-                    FoodType = chicken.FoodType
-                }
-            }));
-        }
+    [HttpPost]
+    public async Task<IActionResult> CreateFoodService(CreateFoodServiceRequestDto foodService)
+    {
+        ArgumentNullException.ThrowIfNull(foodService);
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteFoodService(long id)
+        var command = new FoodServiceCreateCommand
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
-        }
+            FoodType = foodService.FoodType,
+            Amount = foodService.Amount,
+        };
+
+        var response = await Mediator.Send(command);
+
+        return HandleResult(response);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> EditFoodService(EditFoodServiceRequestDto foodService)
+    {
+        ArgumentNullException.ThrowIfNull(foodService);
+
+        var command = new FoodServiceEditCommand
+        {
+            Id = foodService.Id,
+            Amount = foodService.Amount,
+            FoodType = foodService.FoodType
+        };
+
+        var response = await Mediator.Send(command);
+
+        return HandleResult(response);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteFoodService(long id)
+    {
+        var response = await Mediator.Send(new FoodServiceDeleteCommand { Id = id });
+
+        return HandleResult(response);
     }
 }

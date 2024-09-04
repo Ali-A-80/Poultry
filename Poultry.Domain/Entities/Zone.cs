@@ -25,7 +25,7 @@
             }
 
             double totalAmount = TemperatureSensors.Sum(sensor => sensor.Amount);
-            return totalAmount / TemperatureSensors.Count;
+            return Math.Round(totalAmount / TemperatureSensors.Count, 2, MidpointRounding.AwayFromZero);
         }
 
         public double GetAverageHumiditySensorAmount()
@@ -36,7 +36,7 @@
             }
 
             double totalAmount = HumiditySensors.Sum(sensor => sensor.Amount);
-            return totalAmount / HumiditySensors.Count;
+            return Math.Round(totalAmount / HumiditySensors.Count, 2, MidpointRounding.AwayFromZero);
         }
 
         public double GetAverageVentilationSensorAmount()
@@ -47,7 +47,7 @@
             }
 
             double totalAmount = VentilationSensors.Sum(sensor => sensor.AirFlow);
-            return totalAmount / VentilationSensors.Count;
+            return Math.Round(totalAmount / VentilationSensors.Count, 2, MidpointRounding.AwayFromZero);
         }
 
     }
